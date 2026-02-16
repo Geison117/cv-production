@@ -17,13 +17,12 @@ app = FastAPI()
 
 
 origins = [
-    "hoja-de-vida-full-stack-corr-qc84jtp7o-geison-blancos-projects.vercel.app",
-    "https://hoja-de-vida-full-stack-corr.vercel.app/"
+    "https://hoja-de-vida-full-stack-corr.vercel.app/",  
 ]
 
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["*"],#origins,
+    allow_origins=origins,
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
