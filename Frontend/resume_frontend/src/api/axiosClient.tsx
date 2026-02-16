@@ -1,11 +1,8 @@
-/*import axios from "axios";
-
+import axios from "axios";
 
 const api = axios.create({
-  baseURL: "https://hoja-de-vida-full-stack-ewp4.vercel.app/",  // URL de backend en Render
-  withCredentials: true,                   // si usas cookies/JWT
+  baseURL: "/api"//import.meta.env.VITE_API_URL, //"/api", // usando proxy de Vite
 });
-
 
 // 🔐 Interceptor para agregar token automáticamente
 api.interceptors.request.use((config) => {
@@ -16,41 +13,4 @@ api.interceptors.request.use((config) => {
   return config;
 });
 
-
 export default api;
-*/
-
-// fetchClient.ts
-const BASE_URL =    "https://hoja-de-vida-full-stack.onrender.com"; // tu backend en vercel
-const cont = 2;
-
-export async function fetchClient(
-  endpoint: string,
-  options: RequestInit = {}
-) {
-  // Obtener token si existe
-  const token = localStorage.getItem("token");
-
-  // Construir headers, incluyendo Authorization si hay token
-  const headers: HeadersInit = {
-    "Content-Type": "application/json",
-    ...(token && { Authorization: `Bearer ${token}` }),
-    ...(options.headers || {}),
-  };
-
-  // Hacer la petición con fetch
-  const response = await fetch(`${BASE_URL}${endpoint}`, {
-    ...options,
-    headers,
-    credentials: "include", // <--- envía cookies si las hay
-  });
-
-  // Revisar si la respuesta es OK
-  if (!response.ok) {
-    const errorData = await response.json().catch(() => ({}));
-    throw { status: response.status, ...errorData };
-  }
-
-  // Devolver JSON
-  return response.json();
-}

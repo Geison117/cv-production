@@ -1,2 +1,4 @@
 Backend/venv
 install.md
+.env
+.env_prod

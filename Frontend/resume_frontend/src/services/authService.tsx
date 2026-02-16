@@ -1,20 +1,18 @@
-/*import api from "../api/axiosClient";
-
+import api from "../api/axiosClient";
 
 export const login = async (email, password) => {
-  try {
-    const response = await api.post("/auth/login", {
-      email,
-      password,
-    });
-    return response.data;  // devolver los datos
-  } catch (error) {
-    console.error(error);
-    throw error;  // para que quien llame a login pueda manejar el error
-  }
-};
+  const response = await api.post("/auth/login", {
+    email,
+    password,
+  });
 
-const cont = 1
+  const { access_token } = response.data;
+
+  // Guardar token
+  localStorage.setItem("token", access_token);
+
+  return response.data;
+};
 
 export const getCurrentUser = async () => {
   const response = await api.get("/users/me");
@@ -24,26 +22,3 @@ export const getCurrentUser = async () => {
 export const logout = () => {
   localStorage.removeItem("token");
 };
-
-*/
-
-// authService.tsx
-import { fetchClient } from "../api/axiosClient";
-
-export const login = async (email: string, password: string) => {
-  return fetchClient("/auth/login", {
-    method: "POST",
-    body: JSON.stringify({ email, password }),
-  });
-};
-
-export const getCurrentUser = async () => {
-  return fetchClient("/users/me", {
-    method: "GET",
-  });
-};
-
-export const logout = () => {
-  localStorage.removeItem("token");
-};
-

@@ -6,9 +6,9 @@ from fastapi import Depends, HTTPException, status
 from sqlalchemy.orm import Session
 from .database import get_db
 from . import models
+from .config import settings
 
-
-SECRET_KEY = "super_secret_key_cambiar_en_produccion"
+SECRET_KEY = settings.SECRET_KEY #"super_secret_key_cambiar_en_produccion"
 ALGORITHM = "HS256"
 ACCESS_TOKEN_EXPIRE_MINUTES = 30
 

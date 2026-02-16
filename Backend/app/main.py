@@ -4,9 +4,7 @@ from .database import engine, get_db
 from .utils import hash_password, verify_password, create_access_token, get_current_user
 from sqlalchemy.orm import Session
 from fastapi.middleware.cors import CORSMiddleware
-
-
-
+from .config import settings
 
 
 
@@ -15,10 +13,13 @@ models.Base.metadata.create_all(bind=engine)
 
 app = FastAPI()
 
+print(settings.APP_ENV)
+print(settings.DATABASE_URL)
+print(settings.SECRET_KEY)
 
 origins = [
-    "https://cvapptool.netlify.app"     
-
+    #"https://cvapptool.netlify.app"     
+    settings.FRONTEND_URL
 ]
 
 app.add_middleware(
