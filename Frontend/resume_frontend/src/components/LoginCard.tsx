@@ -6,7 +6,7 @@ import { AuthContext } from "../context/AuthContext";
 function LoginCard() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const { setUser } = useContext(AuthContext);
+  const { setUser } = useContext(AuthContext) as any;;
 
   const handleSubmit = async (e) => {
     e.preventDefault();
