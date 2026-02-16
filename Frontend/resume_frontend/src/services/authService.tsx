@@ -1,4 +1,4 @@
-import api from "../api/axiosClient";
+/*import api from "../api/axiosClient";
 
 
 export const login = async (email, password) => {
@@ -25,4 +25,25 @@ export const logout = () => {
   localStorage.removeItem("token");
 };
 
+*/
+
+// authService.tsx
+import { fetchClient } from "../api/axiosClient";
+
+export const login = async (email: string, password: string) => {
+  return fetchClient("/auth/login", {
+    method: "POST",
+    body: JSON.stringify({ email, password }),
+  });
+};
+
+export const getCurrentUser = async () => {
+  return fetchClient("/users/me", {
+    method: "GET",
+  });
+};
+
+export const logout = () => {
+  localStorage.removeItem("token");
+};
 
