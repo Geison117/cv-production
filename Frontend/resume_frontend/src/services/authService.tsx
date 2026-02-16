@@ -1,4 +1,4 @@
-import api from "../api/axios";
+import api from "../api/axiosClient";
 
 
 export const login = async (email, password) => {
@@ -14,6 +14,8 @@ export const login = async (email, password) => {
   }
 };
 
+const cont = 1
+
 export const getCurrentUser = async () => {
   const response = await api.get("/users/me");
   return response.data;
@@ -22,3 +24,5 @@ export const getCurrentUser = async () => {
 export const logout = () => {
   localStorage.removeItem("token");
 };
+
+
