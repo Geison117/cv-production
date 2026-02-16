@@ -3,13 +3,14 @@ import LinkedInIcon from "@mui/icons-material/LinkedIn";
 import GitHubIcon from "@mui/icons-material/GitHub";
 import LocationOnIcon from "@mui/icons-material/LocationOn";
 import profileImg from "../assets/profile.jpg";
+import SmartToyIcon from "@mui/icons-material/SmartToy";
 
 function HeroSection() {
   return (
     
     <Box
       sx={{
-        height: "60vh",
+        height: "90vh",
         background: "linear-gradient(135deg, #1e3c72, #2a5298)",
         display: "flex",
         flexDirection: "column",
@@ -45,7 +46,7 @@ function HeroSection() {
       </Typography>
 
       <Typography variant="h5" sx={{ mt: 2 }}>
-        Ingeniero de Software | Backend Developer | Machine Learning
+        Ingeniero de Software | Full-Stack Developer | Machine Learning
       </Typography>
 
       {/* Ciudad */}
@@ -90,6 +91,40 @@ function HeroSection() {
         <GitHubIcon fontSize="large" />
     </IconButton>
     </Stack>
+
+
+    <Typography
+  variant="body1"
+  sx={{
+    maxWidth: 600,
+    margin: "20px auto",
+    opacity: 0.9,
+    lineHeight: 1.6,
+    px: 2
+  }}
+>
+Ingeniero de Sistemas egresado de la Universidad Industrial de Santander desde 2024, Colombia, tengo conocimiento en JavaScript, Python, he manejado bases de datos en SQL, y he manejado librerias para manipular datos en JSON y en XML. Me gusta mucho la programación basada en objetos, y resolver problemas reales de software. Soy ingeniero de software apasionado por el desarrollo backend con FastAPI y
+  la construcción de interfaces modernas con React. Me enfoco en crear
+  soluciones eficientes, escalables y bien estructuradas.  
+</Typography>
+
+
+      <IconButton
+    component="a"
+    href="https://chat.openai.com/"
+    target="_blank"
+    rel="noopener"
+    sx={{
+      color: "white",
+      transition: "transform 0.3s ease",
+      "&:hover": { transform: "scale(1.2)" }
+    }}
+  >
+    <SmartToyIcon fontSize="large" />
+
+      Este proyecto fue desarrollado con ayuda de ChatGPT
+  </IconButton>
+     
     </Box>
   );
 }
