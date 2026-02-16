@@ -23,7 +23,7 @@ origins = [
 
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=origins,
+    allow_origins=["*"],#origins,
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
@@ -107,6 +107,8 @@ def login(user_credentials: schemas.LoginRequest, db: Session = Depends(get_db))
 
     # 3️⃣ Crear token
     access_token = create_access_token(data={"user_id": user.id})
+
+    
 
     return {
         "access_token": access_token,
