@@ -22,6 +22,7 @@ export default api;
 
 // fetchClient.ts
 const BASE_URL = "https://hoja-de-vida-full-stack-ewp4.vercel.app"; // tu backend en vercel
+const cont = 1;
 
 export async function fetchClient(
   endpoint: string,
