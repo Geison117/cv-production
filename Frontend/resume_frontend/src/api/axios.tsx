@@ -1,20 +1,31 @@
 import axios from "axios";
 
+const login = async (email, password) => {
+  const response = await axios.post(
+    "https://hoja-de-vida-full-stack.onrender.com/auth/login",
+    { email, password }
+  );
 
-const api = axios.create({
-  baseURL: "https://hoja-de-vida-full-stack.onrender.com/",  // URL de backend en Render
-  withCredentials: true,                   // si usas cookies/JWT
-});
+  const { access_token, token_type } = response.data;
 
+  // Guardar el token en localStorage o estado
+  localStorage.setItem("token", access_token);
 
-// 🔐 Interceptor para agregar token automáticamente
-api.interceptors.request.use((config) => {
+  return access_token;
+};
+
+// Luego, para llamadas autenticadas
+const getProtectedData = async () => {
   const token = localStorage.getItem("token");
-  if (token) {
-    config.headers.Authorization = `Bearer ${token}`;
-  }
-  return config;
-});
 
+  const response = await axios.get(
+    "https://hoja-de-vida-full-stack.onrender.com/protected",
+    {
+      headers: {
+        Authorization: `Bearer ${token}` // <--- aquí va tu JWT en la cabecera
+      }
+    }
+  );
 
-export default api;
+  return response.data;
+};
