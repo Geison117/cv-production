@@ -1,8 +1,11 @@
 import axios from "axios";
 
+
 const api = axios.create({
-  baseURL: "/api", // usando proxy de Vite
+  baseURL: "https://mi-api.onrender.com",  // URL de backend en Render
+  withCredentials: true,                   // si usas cookies/JWT
 });
+
 
 // 🔐 Interceptor para agregar token automáticamente
 api.interceptors.request.use((config) => {
@@ -12,5 +15,6 @@ api.interceptors.request.use((config) => {
   }
   return config;
 });
+
 
 export default api;
