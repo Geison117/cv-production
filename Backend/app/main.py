@@ -17,7 +17,7 @@ app = FastAPI()
 
 
 origins = [
-    "https://hoja-de-vida-fawn-delta.vercel.app/",
+    "https://hoja-de-vida-full-stack-corr.vercel.app/",
 ]
 
 app.add_middleware(
