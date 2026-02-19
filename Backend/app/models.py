@@ -1,6 +1,7 @@
 from sqlalchemy import Column, Integer, String, Boolean, TIMESTAMP, text
 from sqlalchemy.orm import declarative_base
 
+
 Base = declarative_base()
 
 class Usuario(Base):

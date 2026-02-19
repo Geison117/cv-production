@@ -1,17 +1,22 @@
 from . import models, schemas
 from fastapi import FastAPI, APIRouter, Depends, HTTPException, status
-from .database import engine, get_db
+from .database import get_db,  init_db
 from .utils import hash_password, verify_password, create_access_token, get_current_user
 from sqlalchemy.orm import Session
 from fastapi.middleware.cors import CORSMiddleware
 from .config import settings
+from sqlalchemy.ext.asyncio import AsyncSession
 
 
 
-models.Base.metadata.create_all(bind=engine)
+#models.Base.metadata.create_all(bind=engine)
 
 
 app = FastAPI()
+
+@app.on_event("startup")
+async def on_startup():
+    await init_db()
 
 print(settings.APP_ENV)
 print(settings.DATABASE_URL)
@@ -43,10 +48,10 @@ router = APIRouter(prefix="/users", tags=["Users"])
     response_model=schemas.UsuarioResponse,
     status_code=status.HTTP_201_CREATED
 )
-def register_user(user: schemas.UsuarioCreate, db: Session = Depends(get_db)):
+async def register_user(user: schemas.UsuarioCreate, db: AsyncSession  = Depends(get_db)):
 
     #  Verificar si el email ya existe
-    existing_user = db.query(models.Usuario).filter(
+    existing_user = await db.query(models.Usuario).filter(
         models.Usuario.email == user.email
     ).first()
 
