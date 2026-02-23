@@ -6,6 +6,8 @@ from sqlalchemy.orm import Session
 from fastapi.middleware.cors import CORSMiddleware
 from .config import settings
 from sqlalchemy.ext.asyncio import AsyncSession
+from sqlalchemy import select
+
 
 
 
@@ -48,32 +50,35 @@ router = APIRouter(prefix="/users", tags=["Users"])
     response_model=schemas.UsuarioResponse,
     status_code=status.HTTP_201_CREATED
 )
-async def register_user(user: schemas.UsuarioCreate, db: AsyncSession  = Depends(get_db)):
-
-    #  Verificar si el email ya existe
-    existing_user = await db.query(models.Usuario).filter(
-        models.Usuario.email == user.email
-    ).first()
+async def register_user(
+    user: schemas.UsuarioCreate,
+    db: AsyncSession = Depends(get_db),
+):
+    # 🔍 Verificar si el email ya existe
+    result = await db.execute(
+        select(models.Usuario).where(models.Usuario.email == user.email)
+    )
+    existing_user = result.scalar_one_or_none()
 
     if existing_user:
         raise HTTPException(
             status_code=status.HTTP_400_BAD_REQUEST,
-            detail="El email ya está registrado"
+            detail="El email ya está registrado",
         )
 
-    #  Hashear contraseña
+    # 🔐 Hashear contraseña
     hashed_password = hash_password(user.password)
 
-    # Crear usuario
+    # 👤 Crear usuario
     new_user = models.Usuario(
         nombre=user.nombre,
         email=user.email,
-        password_hash=hashed_password
+        password_hash=hashed_password,
     )
 
     db.add(new_user)
-    db.commit()
-    db.refresh(new_user)
+    await db.commit()
+    await db.refresh(new_user)
 
     return new_user
 
@@ -91,10 +96,10 @@ app.include_router(router)
 router = APIRouter(prefix="/auth", tags=["Auth"])
 
 @router.post("/login", response_model=schemas.TokenResponse)
-def login(user_credentials: schemas.LoginRequest, db: Session = Depends(get_db)):
+async def login(user_credentials: schemas.LoginRequest, db: AsyncSession = Depends(get_db)):
 
     # 1️⃣ Buscar usuario
-    user = db.query(models.Usuario).filter(
+    user = await db.query(models.Usuario).filter(
         models.Usuario.email == user_credentials.email
     ).first()
 
