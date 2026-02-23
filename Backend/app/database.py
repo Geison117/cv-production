@@ -22,7 +22,8 @@ ssl_context.check_hostname = False
 ssl_context.verify_mode = ssl.CERT_NONE
 
 engine = create_async_engine(SQLALCHEMY_DATABASE_URL, echo=False,  pool_pre_ping=True,
-    pool_recycle=300, connect_args={"ssl": ssl_context})
+    pool_recycle=300, connect_args={"ssl": ssl_context,  "statement_cache_size": 0})
+
 
 SessionLocal = sessionmaker(
     engine,
