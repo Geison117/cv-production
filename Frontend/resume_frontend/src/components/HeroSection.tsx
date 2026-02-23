@@ -107,23 +107,6 @@ Ingeniero de Sistemas egresado de la Universidad Industrial de Santander desde 2
   la construcción de interfaces modernas con React. Me enfoco en crear
   soluciones eficientes, escalables y bien estructuradas.  
 </Typography>
-
-
-      <IconButton
-    component="a"
-    href="https://chat.openai.com/"
-    target="_blank"
-    rel="noopener"
-    sx={{
-      color: "white",
-      transition: "transform 0.3s ease",
-      "&:hover": { transform: "scale(1.2)" }
-    }}
-  >
-    <SmartToyIcon fontSize="large" />
-
-      Este proyecto fue desarrollado con ayuda de ChatGPT
-  </IconButton>
      
     </Box>
   );
