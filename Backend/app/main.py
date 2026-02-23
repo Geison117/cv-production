@@ -99,9 +99,8 @@ router = APIRouter(prefix="/auth", tags=["Auth"])
 async def login(user_credentials: schemas.LoginRequest, db: AsyncSession = Depends(get_db)):
 
     # 1️⃣ Buscar usuario
-    user = await db.query(models.Usuario).filter(
-        models.Usuario.email == user_credentials.email
-    ).first()
+    user = await db.execute(select(models.Usuario).where(models.Usuario.email == user_credentials.email))
+    user = user.scalar_one_or_none()
 
     if not user:
         raise HTTPException(
